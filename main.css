@@ -1,0 +1,21 @@
+*{
+    background-color: rgb(206, 227, 209);
+}
+.all-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-field{
+    padding-top: 10rem;
+    padding-bottom: 1rem;
+}
+
+.button-to-display{}
+.button-to-display:hover{
+}
+
+.image-displayed{
+    padding: 2rem;
+}

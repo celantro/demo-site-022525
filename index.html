@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>insert letter</title>
+    <style>
+
+        /* STYLE FOR THE INPUT FIELD */
+        #charInput {
+            font-family: helvetica, arial, sans-serif;
+            font-weight: 800;
+            text-align: center;
+            height: 11vw;
+            width: 10vw;
+            font-size: 10vw;
+        }
+
+        /* STYLE FOR THE SUBMIT BUTTON */
+        #submitButton {
+            font-family: helvetica, arial, sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            height: 4rem;
+            width: 10rem;
+            border-radius: 2rem;
+            background-color: rgb(105, 197, 123);
+            color: rgb(255, 255, 255);
+        }
+
+        /* STYLE FOR THE IMAGE */
+        #displayedImage {
+            display: none; /* This line is mandatory */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="all-container">
+        <div class="input-field">
+    <!-- INPUT FIELD FOR 1 CHARACTER -->
+    <input type="text" id="charInput" maxlength="1">
+        </div>
+        <div class="button-to-display">
+    <!-- BUTTON TO DISPLAY IMAGE -->
+    <button onclick="displayImage()" id="submitButton">show me a dog!</button>
+        </div>
+        <div class="image-displayed">
+    <!-- IMAGE TO DISPLAY -->
+    <img id="displayedImage" src="" alt="Displayed Image">
+        </div>
+    </div>
+
+    <!-- Image Display Script Below -->
+    <script>
+        // Array of images
+        // DIRECTIONS: UPDATE THE URLS WITH THE RELATIVE LINKS OF YOUR IMAGES
+        const images = [
+            "https://media2.giphy.com/media/3ohs4g5QaUgOzcgFwY/giphy.gif?cid=6c09b952oozxtiioo33xyriwmd7hsm7k4jzlnlt30po6m78v&ep=v1_gifs_search&rid=giphy.gif&ct=ghttps://via.placeholder.com/300/00FF00/FFFFFF?text=A", //Afghan hound
+            "https://media.tenor.com/0gYivPKB6EEAAAAM/borzoi-dog-long-nose.gif", //Borzoi
+            "https://media.tenor.com/e3rxoQ2-qHcAAAAM/gizzie-dog.gif", //Chihuahua
+            "https://media1.giphy.com/media/NmGbJwLl7Y4lG/giphy.gif?cid=6c09b952cz71bzzlzcft1xvw7p1fd6rvo6kllg4son0v4o5d&ep=v1_gifs_search&rid=giphy.gif&ct=g", //Dachsund
+            "https://media4.giphy.com/media/vZkUlWVWZKJK6v6wVF/200w.gif?cid=6c09b952vxlt7ehrlphg80a73c4ey8ma04lxwnuogh3uvhdm&ep=v1_gifs_search&rid=200w.gif&ct=g", //English Springer Spaniel
+            "https://media4.giphy.com/media/mYb4JOmRfa5oKRh6k4/200w.gif?cid=6c09b952rp39jx69w023cze08qrhet9rjy5u5cu1iisikcas&ep=v1_gifs_search&rid=200w.gif&ct=g", //French Bulldog
+            "https://media1.giphy.com/media/JRmilld9HS2CjW0miL/giphy.gif?cid=6c09b952bub6xcpvjv6zyycej7y60xjj515cxcwapy59oa9g&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=g", //Golden Retriever
+            "https://media2.giphy.com/media/arw1fJJ1F7067yop8m/200w.gif?cid=6c09b952jdd5yqbe1dw14l354jgoop58hp6xugl5labmokgk&ep=v1_gifs_search&rid=200w.gif&ct=g", //Havanese
+            "https://media.tenor.com/dxxjLU5NmIoAAAAM/derpy-dog.gif", //Italian Greyhound
+            "https://64.media.tumblr.com/fe290a5d19c1220557f6245fe6186ca3/tumblr_naz1t02Oag1qamgpzo1_250.gif", //Japanese Spitz
+            "https://www.rover.com/blog/wp-content/uploads/2019/05/cavalier-head-tilt.gif", //King Charles Spaniel
+            "https://i.pinimg.com/originals/18/9b/78/189b7874ba009d93e0823de53ac2efdf.gif", //Labrador
+            "https://media.tenor.com/68rTUr08GaIAAAAM/dog-wink-maltese.gif", //Maltese
+            "https://media.tenor.com/fWi85fuBJO4AAAAM/newfie-bucket.gif", //Newfoundland
+            "https://i.redd.it/mcwx48ug1j841.gif", //Old English Sheepdog
+            "https://64.media.tumblr.com/tumblr_m3p4mlMAFB1qmz4rgo1_500.gif", //Papillon
+            "https://media.tenor.com/X0hObpBG6mQAAAAM/confused-huh.gif", //Q
+            "https://i.pinimg.com/originals/a1/93/88/a19388482e513c437a4ef28b099be260.gif", //Rottweiler
+            "https://media3.giphy.com/media/bKqtxkyPXJv8I/giphy.gif?cid=6c09b95243f9wxli7ubdh1pe0q35c6tzyym3ilwv6yoegp2a&ep=v1_gifs_search&rid=giphy.gif&ct=g", //Shiba inu
+            "https://media.tenor.com/2V7vCc5Sn3UAAAAM/chow-chow-puppy.gif", //Tibetan Mastiff
+            "https://i.gifer.com/origin/cf/cf59410e74c9a019393c275e410b14fd_w200.gif", //U
+            "https://media.tenor.com/0cw_UCfXQlsAAAAM/vizsla.gif", //Viszla
+            "https://media0.giphy.com/media/z72itrtuu2Neahy3tS/200w.gif?cid=6c09b952sov8owoabylfa1slatnyvc4q00epqi1kcugssrfh&ep=v1_gifs_search&rid=200w.gif&ct=g", //Westie
+            "https://media4.giphy.com/media/tPq6jsgl5D4GDJptmG/200w.gif?cid=6c09b9522iwz9mj24w4k2s7vtup49s3r7mkld7msow1r0ixs&ep=v1_gifs_search&rid=200w.gif&ct=g", //Xoloitzcuintle
+            "https://media.tenor.com/-UBNWLwnWIoAAAAM/yorkshire-cute.gif", //Yorkie
+            "https://i0.wp.com/images.onwardstate.com/uploads/2015/05/oie_14175751vZSQRLEn.gif?fit=650%2C408&ssl=1"  //Z
+        ];
+
+        function displayImage() {
+            const input = document.getElementById("charInput").value.toUpperCase();
+            const imgElement = document.getElementById("displayedImage");
+            
+            // Assign an image based on character (A-Z)
+            const index = input.charCodeAt(0) - 65; // 'A' is 65 in ASCII
+            if (index >= 0 && index < images.length) {
+                imgElement.src = images[index];
+                imgElement.style.display = "block";
+            } else {
+                /* 
+                alert("Please enter a letter between A and Z.");
+                imgElement.style.display = "none";
+                */
+
+                // IF INVALID INPUT IS ENTERED, DISPLAY ALTERNATE IMAGE
+                imgElement.src = "https://media.tenor.com/IMxQ6Pil13cAAAAM/anyealator-sad-dog.gif"
+                imgElement.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>
